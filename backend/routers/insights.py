@@ -8,7 +8,7 @@ from fastapi import APIRouter, Request, HTTPException
 router = APIRouter()
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "phi3:mini"
+OLLAMA_MODEL = "qwen2.5:7b-instruct-q4_K_M"
 
 
 class MarketingPlanRequest(BaseModel):
@@ -25,7 +25,7 @@ def _count_levels(anomaly_results):
     return counts
 
 
-def _call_ollama(prompt, timeout=90):
+def _call_ollama(prompt, timeout=150):
     """Send prompt to Ollama and return response text. Returns None on any failure."""
     try:
         resp = requests.post(

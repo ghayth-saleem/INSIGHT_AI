@@ -7,7 +7,7 @@ from fastapi import APIRouter, Request, HTTPException
 router = APIRouter()
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "phi3:mini"
+OLLAMA_MODEL = "qwen2.5:7b-instruct-q4_K_M"
 
 
 class ChatRequest(BaseModel):
@@ -139,7 +139,7 @@ def _format_history(history):
     return '\n'.join(lines)
 
 
-def _call_ollama(prompt, timeout=60):
+def _call_ollama(prompt, timeout=120):
     """Send prompt to Ollama and return response text. Returns None on failure."""
     try:
         resp = requests.post(
