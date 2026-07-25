@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+/* ========== Google Fonts loaded in layout.tsx via next/font ========== */
+
+/* ========== Base dark theme ========== */
+:root {
+  --bg-primary: #07070f;
+  --bg-sidebar: #09090f;
+  --bg-card: #0f0f1a;
+  --bg-hover: #14142a;
+  --text-primary: #e2e2e6;
+  --text-secondary: #8a8a9a;
+  --text-muted: #52525e;
+  --border-subtle: #1a1a2e;
+  --border-active: #2a2a3e;
+  --accent-amber: #f59e0b;
+  --module-if: #22d3ee;
+  --module-dnn: #a78bfa;
+  --module-prophet: #fb7185;
+  --module-arabert: #34d399;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ========== Custom scrollbar ========== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-active);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ========== Selection highlight ========== */
+::selection {
+  background-color: rgba(245, 158, 11, 0.3);
+  color: var(--text-primary);
+}
+
+/* ========== Focus ring for accessibility ========== */
+*:focus-visible {
+  outline: 2px solid var(--accent-amber);
+  outline-offset: 2px;
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Chatbot - INSIGHT AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;family=Syne:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#534434",
+                    "surface-container": "#1f1f28",
+                    "on-tertiary": "#00344a",
+                    "inverse-primary": "#855300",
+                    "error": "#ffb4ab",
+                    "surface-container-lowest": "#0d0d16",
+                    "tertiary-fixed": "#c5e7ff",
+                    "engagement-violet": "#8b5cf6",
+                    "on-background": "#e4e1ee",
+                    "surface-card": "#0d0d14",
+                    "surface-bright": "#393842",
+                    "surface-dim": "#13131b",
+                    "secondary-fixed-dim": "#c8c5cf",
+                    "surface": "#13131b",
+                    "on-primary-fixed-variant": "#653e00",
+                    "on-tertiary-container": "#004966",
+                    "secondary-container": "#494851",
+                    "inverse-surface": "#e4e1ee",
+                    "anomaly-cyan": "#06b6d4",
+                    "surface-variant": "#34343e",
+                    "secondary": "#c8c5cf",
+                    "on-surface": "#e4e1ee",
+                    "on-surface-variant": "#d8c3ad",
+                    "outline": "#a08e7a",
+                    "background": "#13131b",
+                    "on-secondary": "#303038",
+                    "primary-fixed": "#ffddb8",
+                    "on-secondary-container": "#b9b7c1",
+                    "surface-container-high": "#292932",
+                    "tertiary": "#8fd5ff",
+                    "on-secondary-fixed": "#1b1b22",
+                    "on-primary": "#472a00",
+                    "on-tertiary-fixed": "#001e2d",
+                    "sentiment-rose": "#f43f5e",
+                    "inverse-on-surface": "#302f39",
+                    "on-error": "#690005",
+                    "secondary-fixed": "#e4e1ec",
+                    "inner-glow-amber": "rgba(245, 158, 11, 0.1)",
+                    "primary": "#ffc174",
+                    "on-tertiary-fixed-variant": "#004c6a",
+                    "on-error-container": "#ffdad6",
+                    "trend-emerald": "#10b981",
+                    "on-primary-fixed": "#2a1700",
+                    "surface-tint": "#ffb95f",
+                    "surface-container-low": "#1b1b24",
+                    "surface-container-highest": "#34343e",
+                    "on-secondary-fixed-variant": "#47464e",
+                    "tertiary-container": "#1abdff",
+                    "primary-container": "#f59e0b",
+                    "sidebar-bg": "#09090f",
+                    "on-primary-container": "#613b00",
+                    "tertiary-fixed-dim": "#7fd0ff",
+                    "primary-fixed-dim": "#ffb95f",
+                    "error-container": "#93000a",
+                    "border-subtle": "rgba(255, 255, 255, 0.06)"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "stack-sm": "8px",
+                    "container-padding": "32px",
+                    "stack-md": "16px",
+                    "sidebar-expanded": "240px",
+                    "sidebar-collapsed": "64px",
+                    "stack-lg": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg": ["Syne"],
+                    "data-display": ["Space Mono"],
+                    "headline-md": ["Syne"],
+                    "headline-xl": ["Syne"],
+                    "mono-ui": ["Space Mono"],
+                    "data-label": ["Space Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-sm": ["12px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "700"}],
+                    "data-display": ["24px", {"lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "700"}],
+                    "headline-xl": ["40px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "800"}],
+                    "mono-ui": ["11px", {"lineHeight": "1.2", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "data-label": ["12px", {"lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .inner-glow-hover:hover {
+            box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.1);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[64px] hover:w-[240px] transition-all duration-300 z-50 bg-sidebar-bg dark:bg-sidebar-bg border-r border-border-subtle flex flex-col justify-between py-gutter group overflow-hidden">
+<!-- Header -->
+<div class="px-4 flex items-center gap-4 mb-8 whitespace-nowrap">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-[20px]" data-icon="hub">hub</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tighter">INSIGHT AI</h1>
+<p class="font-mono-ui text-mono-ui text-secondary opacity-60">Precision Data</p>
+</div>
+</div>
+<!-- Main Nav -->
+<div class="flex-1 flex flex-col gap-2 px-2">
+<a class="flex items-center gap-4 px-2 py-3 rounded-DEFAULT hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="upload_file">upload_file</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Upload</span>
+</a>
+<a class="flex items-center gap-4 px-2 py-3 rounded-DEFAULT hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="analytics">analytics</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Analytics</span>
+</a>
+<a class="flex items-center gap-4 px-2 py-3 rounded-DEFAULT hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="lightbulb">lightbulb</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Insights</span>
+</a>
+<a class="flex items-center gap-4 px-2 py-3 rounded-DEFAULT hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Simulator</span>
+</a>
+<a class="flex items-center gap-4 px-2 py-3 rounded-DEFAULT border-l-2 border-primary text-primary bg-inner-glow-amber transition-all" href="#">
+<span class="material-symbols-outlined shrink-0" data-icon="smart_toy">smart_toy</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Chatbot</span>
+</a>
+</div>
+<!-- Footer Nav -->
+<div class="px-2 mt-auto">
+
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-[64px] flex flex-col h-screen relative bg-[#07070f]">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-gutter h-16 bg-background dark:bg-background border-b border-border-subtle shrink-0 z-40">
+<div class="font-headline-md text-headline-md font-bold text-on-surface uppercase">
+                INSIGHT AI
+            </div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-2">
+<span class="px-2 py-1 rounded bg-[#0d0d14] border border-border-subtle font-mono-ui text-mono-ui flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-trend-emerald"></div>
+                        IF_SCORE_94
+                    </span>
+<span class="px-2 py-1 rounded bg-[#0d0d14] border border-border-subtle font-mono-ui text-mono-ui flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-anomaly-cyan"></div>
+                        DNN_LOADED
+                    </span>
+<span class="px-2 py-1 rounded bg-[#0d0d14] border border-border-subtle font-mono-ui text-mono-ui flex items-center gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                        VRAM_64%
+                    </span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-border-subtle cursor-pointer hover:scale-95 duration-100">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close-up portrait of an analytical professional with neutral expression, lit by cool monitor light against a dark obsidian background, conveying focus and precision in a high-tech environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeN_5kBgUWayOOaT-haxB1oQrCkVWCV4INE2-_GSqbTpO6DwQXLlU0mP3OmynQC3WHdgZUD92Lvb7t95roRpB9xaLtol4oliwXwd9wQb7RK-Y3oZJiFRz3lj3POyEZE5AekhmxxYPFC8Ikyy-L5aUkaLvFZHkFYGND5bzI1NbsU_CMU69prLusl-T-6yWTvX0dKPpVQO1brSm0l_ElY6benqph8pLMe8ute7XZZSFX9ZHAQYnaOAUa0DUtfunpefOPr7Mjjwj575U">
+</div>
+</div>
+</header>
+<!-- Chat Container -->
+<div class="flex-1 flex flex-col max-w-4xl w-full mx-auto p-4 md:p-gutter h-full overflow-hidden">
+<!-- Messages Area -->
+<div class="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-6 pb-6">
+<!-- System Message -->
+<div class="flex justify-center my-4">
+<span class="font-mono-ui text-mono-ui text-secondary opacity-60 border border-border-subtle px-3 py-1 rounded-full bg-surface-card">Session Initialized // 14:02:45 UTC</span>
+</div>
+<!-- AI Message -->
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-[18px]" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-surface-card border-l-2 border-primary rounded-r-lg rounded-bl-lg p-4 max-w-[85%]">
+<p class="font-body-md text-on-surface mb-2">Systems online. All data pipelines synchronized. How can I assist with your dataset analysis today?</p>
+<div class="flex gap-2 mt-3 flex-wrap">
+<button class="px-3 py-1.5 rounded border border-border-subtle bg-[#07070f] font-mono-ui text-mono-ui text-secondary hover:border-primary hover:text-primary transition-colors inner-glow-hover text-left">
+                                "Why did my best post go viral?"
+                            </button>
+<button class="px-3 py-1.5 rounded border border-border-subtle bg-[#07070f] font-mono-ui text-mono-ui text-secondary hover:border-primary hover:text-primary transition-colors inner-glow-hover text-left">
+                                "Identify anomalies in Q3 engagement."
+                            </button>
+<button class="px-3 py-1.5 rounded border border-border-subtle bg-[#07070f] font-mono-ui text-mono-ui text-secondary hover:border-primary hover:text-primary transition-colors inner-glow-hover text-left">
+                                "Forecast next week's reach."
+                            </button>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-4 items-start flex-row-reverse">
+<div class="w-8 h-8 rounded bg-surface-variant overflow-hidden border border-border-subtle shrink-0">
+<img alt="User" class="w-full h-full object-cover" data-alt="Close-up portrait of an analytical professional with neutral expression, lit by cool monitor light against a dark obsidian background, conveying focus and precision in a high-tech environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSMOWvUPULw0_flO2fwQ6NfTw21RYabEUsSmu7_JM6D6P3Z76Uv38SY1SCWKZ1uahCGKvJWbG5U1DMygTcE_2OvnE169BNCnwY9eLaFwcAn40JNyu8HFpn-wjuMQjG28QoMngqu7oAtV8l3DqGO7hKyIfbptJYceZlfTs9rE-6TgSTLHhTdpdIrIPeIjizAkxxOMsWybwDJw0vIYyIJp20v35eRf7KccCfFj92qrI7U5l4JzryXfH-jC0EWe02HX4ozgyOncaTmPg">
+</div>
+<div class="bg-[#13131b] border border-border-subtle rounded-l-lg rounded-br-lg p-4 max-w-[85%]">
+<p class="font-body-md text-on-surface">Why did my best post go viral?</p>
+</div>
+</div>
+<!-- AI Message -->
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-[18px]" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-surface-card border-l-2 border-primary rounded-r-lg rounded-bl-lg p-4 max-w-[85%]">
+<p class="font-body-md text-on-surface mb-4">Analyzing post <span class="font-data-label text-data-label opacity-70 bg-[#07070f] px-1 rounded">ID_992_A</span>...</p>
+<p class="font-body-md text-on-surface mb-4">The virality was driven by a confluence of three key metrics exceeding standard deviations:</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+<div class="border border-border-subtle p-3 rounded bg-[#07070f]">
+<p class="font-mono-ui text-mono-ui text-secondary mb-1">Velocity (1H)</p>
+<p class="font-data-display text-data-display text-on-surface flex items-center gap-2">
+                                    3.4x <span class="material-symbols-outlined text-trend-emerald text-[16px]" data-icon="trending_up">trending_up</span>
+</p>
+</div>
+<div class="border border-border-subtle p-3 rounded bg-[#07070f]">
+<p class="font-mono-ui text-mono-ui text-secondary mb-1">Share Ratio</p>
+<p class="font-data-display text-data-display text-on-surface flex items-center gap-2">
+                                    12.8% <span class="material-symbols-outlined text-trend-emerald text-[16px]" data-icon="trending_up">trending_up</span>
+</p>
+</div>
+<div class="border border-border-subtle p-3 rounded bg-[#07070f]">
+<p class="font-mono-ui text-mono-ui text-secondary mb-1">Sentiment</p>
+<p class="font-data-display text-data-display text-on-surface flex items-center gap-2">
+                                    +0.82 <span class="material-symbols-outlined text-anomaly-cyan text-[16px]" data-icon="timeline">timeline</span>
+</p>
+</div>
+</div>
+<p class="font-body-md text-on-surface">Additionally, algorithmic clustering detected strong resonance with the <span class="font-data-label text-data-label opacity-70 bg-[#07070f] px-1 rounded">#TechTrends</span> semantic node, which experienced a macro surge globally at the time of posting.</p>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="pt-4 shrink-0">
+<div class="relative flex items-center">
+<input class="w-full bg-[#0d0d14] border border-border-subtle rounded-lg py-4 pl-4 pr-12 font-body-md text-on-surface placeholder:text-secondary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all bg-[#07070f]" placeholder="Query dataset..." type="text">
+<button class="absolute right-2 w-10 h-10 flex items-center justify-center rounded hover:bg-surface-variant transition-colors group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform" data-icon="send">send</span>
+</button>
+</div>
+<div class="flex justify-between items-center mt-2 px-1">
+<p class="font-mono-ui text-mono-ui text-secondary opacity-50">Shift + Enter for new line</p>
+<p class="font-mono-ui text-mono-ui text-secondary opacity-50 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="lock">lock</span> End-to-end encrypted
+                    </p>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>
