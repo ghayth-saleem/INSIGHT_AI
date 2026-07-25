@@ -1,0 +1,405 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Insight AI - Upload</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;family=Syne:wght@400..800&amp;display=swap" rel="stylesheet">
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant": "#534434",
+                        "surface-container": "#1f1f28",
+                        "on-tertiary": "#00344a",
+                        "inverse-primary": "#855300",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0d0d16",
+                        "tertiary-fixed": "#c5e7ff",
+                        "engagement-violet": "#8b5cf6",
+                        "on-background": "#e4e1ee",
+                        "surface-card": "#0d0d14",
+                        "surface-bright": "#393842",
+                        "surface-dim": "#13131b",
+                        "secondary-fixed-dim": "#c8c5cf",
+                        "surface": "#13131b",
+                        "on-primary-fixed-variant": "#653e00",
+                        "on-tertiary-container": "#004966",
+                        "secondary-container": "#494851",
+                        "inverse-surface": "#e4e1ee",
+                        "anomaly-cyan": "#06b6d4",
+                        "surface-variant": "#34343e",
+                        "secondary": "#c8c5cf",
+                        "on-surface": "#e4e1ee",
+                        "on-surface-variant": "#d8c3ad",
+                        "outline": "#a08e7a",
+                        "background": "#13131b",
+                        "on-secondary": "#303038",
+                        "primary-fixed": "#ffddb8",
+                        "on-secondary-container": "#b9b7c1",
+                        "surface-container-high": "#292932",
+                        "tertiary": "#8fd5ff",
+                        "on-secondary-fixed": "#1b1b22",
+                        "on-primary": "#472a00",
+                        "on-tertiary-fixed": "#001e2d",
+                        "sentiment-rose": "#f43f5e",
+                        "inverse-on-surface": "#302f39",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#e4e1ec",
+                        "inner-glow-amber": "rgba(245, 158, 11, 0.1)",
+                        "primary": "#ffc174",
+                        "on-tertiary-fixed-variant": "#004c6a",
+                        "on-error-container": "#ffdad6",
+                        "trend-emerald": "#10b981",
+                        "on-primary-fixed": "#2a1700",
+                        "surface-tint": "#ffb95f",
+                        "surface-container-low": "#1b1b24",
+                        "surface-container-highest": "#34343e",
+                        "on-secondary-fixed-variant": "#47464e",
+                        "tertiary-container": "#1abdff",
+                        "primary-container": "#f59e0b",
+                        "sidebar-bg": "#09090f",
+                        "on-primary-container": "#613b00",
+                        "tertiary-fixed-dim": "#7fd0ff",
+                        "primary-fixed-dim": "#ffb95f",
+                        "error-container": "#93000a",
+                        "border-subtle": "rgba(255, 255, 255, 0.06)"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "container-padding": "32px",
+                        "stack-md": "16px",
+                        "sidebar-expanded": "240px",
+                        "sidebar-collapsed": "64px",
+                        "stack-lg": "24px"
+                    },
+                    fontFamily: {
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Syne"],
+                        "data-display": ["Space Mono"],
+                        "headline-md": ["Syne"],
+                        "headline-xl": ["Syne"],
+                        "mono-ui": ["Space Mono"],
+                        "data-label": ["Space Mono"]
+                    },
+                    fontSize: {
+                        "body-md": ["14px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-sm": ["12px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "700" }],
+                        "data-display": ["24px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "700" }],
+                        "headline-xl": ["40px", { "lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "800" }],
+                        "mono-ui": ["11px", { "lineHeight": "1.2", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "data-label": ["12px", { "lineHeight": "1.5", "letterSpacing": "0.05em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #07070f;
+            color: #e4e1ee;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090f; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #34343e; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #494851; 
+        }
+        
+        .drag-active {
+            border-color: #ffc174 !important;
+            background-color: rgba(245, 158, 11, 0.05);
+            box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.1);
+        }
+
+        .glow-hover:hover {
+            box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.1);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased overflow-x-hidden min-h-screen flex">
+<!-- SideNavBar Component -->
+<nav class="fixed left-0 top-0 h-full w-[64px] hover:w-[240px] transition-all duration-300 z-50 bg-sidebar-bg border-r border-border-subtle flex flex-col justify-between py-gutter overflow-hidden group">
+<!-- Header -->
+<div class="px-4 flex items-center mb-8 whitespace-nowrap">
+<div class="w-8 h-8 rounded bg-surface-variant border border-border-subtle flex items-center justify-center shrink-0 mr-4">
+<span class="material-symbols-outlined text-primary text-[18px]">data_exploration</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="font-headline-md text-headline-md font-bold text-on-surface tracking-tighter">INSIGHT AI</div>
+<div class="font-mono-ui text-mono-ui text-secondary">Precision Data</div>
+</div>
+</div>
+<!-- Main Nav -->
+<ul class="flex flex-col gap-2 flex-1 w-full px-2">
+<!-- Active Tab: Upload -->
+<li class="">
+<a class="flex items-center w-full p-2 rounded hover:bg-surface-variant hover:text-primary transition-colors border-l-2 border-primary text-primary bg-inner-glow-amber whitespace-nowrap" href="#">
+<span class="material-symbols-outlined shrink-0 ml-1 mr-4">upload_file</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300">Upload</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center w-full p-2 rounded hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60 whitespace-nowrap" href="#">
+<span class="material-symbols-outlined shrink-0 ml-1 mr-4">analytics</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300">Analytics</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center w-full p-2 rounded hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60 whitespace-nowrap" href="#">
+<span class="material-symbols-outlined shrink-0 ml-1 mr-4">lightbulb</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300">Insights</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center w-full p-2 rounded hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60 whitespace-nowrap" href="#">
+<span class="material-symbols-outlined shrink-0 ml-1 mr-4">precision_manufacturing</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300">Simulator</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center w-full p-2 rounded hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60 whitespace-nowrap" href="#">
+<span class="material-symbols-outlined shrink-0 ml-1 mr-4">smart_toy</span>
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300">Chatbot</span>
+</a>
+</li>
+</ul>
+<!-- Footer Nav -->
+<ul class="flex flex-col gap-2 w-full px-2 mt-auto">
+<li class="">
+<a class="flex items-center w-full p-2 rounded hover:bg-surface-variant hover:text-primary transition-colors text-secondary opacity-60 whitespace-nowrap" href="#">
+
+<span class="font-mono-ui text-mono-ui opacity-0 group-hover:opacity-100 transition-opacity duration-300">Pipeline</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-[64px] flex flex-col min-h-screen relative overflow-hidden">
+<!-- TopNavBar Component -->
+<header class="flex justify-between items-center w-full px-gutter h-16 border-b border-border-subtle bg-background z-40 shrink-0">
+<div class="font-headline-md text-headline-md font-bold text-on-surface uppercase">INSIGHT AI</div>
+<div class="flex items-center gap-6">
+<!-- Search -->
+<div class="relative hidden md:block">
+
+
+</div>
+<!-- Profile/Secondary Action -->
+<div class="flex items-center gap-3 pl-6 border-l border-border-subtle cursor-pointer hover:scale-95 duration-100 group">
+<div class="text-right hidden sm:block">
+<div class="font-mono-ui text-mono-ui text-secondary group-hover:text-primary transition-colors">vanillaa.perfume</div>
+</div>
+<div class="w-8 h-8 rounded bg-surface-variant border border-border-subtle overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 flex flex-col items-center justify-center p-container-padding relative z-10 w-full max-w-4xl mx-auto">
+<!-- Upload State (Initial) -->
+<div class="w-full flex flex-col items-center justify-center transition-all duration-500 opacity-100 scale-100" id="upload-state">
+<div class="text-center mb-12">
+<h1 class="font-headline-xl text-headline-xl font-bold text-on-surface mb-4 uppercase tracking-tighter">Upload Your Instagram Data</h1>
+<p class="font-mono-ui text-mono-ui text-secondary max-w-lg mx-auto">Drop your Meta Business Suite CSV export here to begin deep anomaly detection and performance forecasting.</p>
+</div>
+<div class="w-full max-w-2xl bg-surface-card border border-border-subtle border-dashed rounded-lg p-12 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 hover:border-primary/50 group glow-hover relative overflow-hidden" id="dropzone">
+<!-- Decorative background grid -->
+<div class="absolute inset-0 pointer-events-none opacity-5" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 24px 24px;"></div>
+<div class="w-16 h-16 rounded-full bg-surface-variant border border-border-subtle flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 relative z-10">
+<span class="material-symbols-outlined text-primary text-[32px]">cloud_upload</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2 relative z-10">Click or drag file to this area to upload</h3>
+<p class="font-mono-ui text-mono-ui text-secondary mb-8 relative z-10">Strictly CSV formats exported from Meta. Max size 50MB.</p>
+<button class="bg-primary text-on-primary font-mono-ui text-mono-ui px-6 py-3 rounded uppercase font-bold tracking-widest hover:bg-surface-tint transition-colors relative z-10" id="trigger-upload-btn">
+                        Select File
+                    </button>
+<input accept=".csv" class="hidden" id="file-input" type="file">
+</div>
+<div class="mt-8 flex items-center gap-2 font-mono-ui text-mono-ui text-secondary opacity-60">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="">End-to-end encrypted. Data is processed locally.</span>
+</div>
+</div>
+<!-- Success State (Hidden initially) -->
+<div class="w-full flex flex-col items-center justify-center transition-all duration-500 opacity-0 scale-95 pointer-events-none absolute inset-0 m-auto h-fit px-container-padding" id="success-state">
+<div class="w-16 h-16 rounded-full bg-trend-emerald/10 border border-trend-emerald/30 flex items-center justify-center mb-8">
+<span class="material-symbols-outlined text-trend-emerald text-[32px]">check</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface mb-2 uppercase text-center">Dataset Processed</h2>
+<p class="font-mono-ui text-mono-ui text-secondary mb-8 text-center">Data structure validated. Ready for deep analysis.</p>
+<!-- Bento style success card -->
+<div class="w-full max-w-3xl grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<!-- Account Module -->
+<div class="bg-surface-card border border-border-subtle rounded p-6 flex flex-col glow-hover">
+<span class="font-data-label text-data-label text-secondary opacity-50 mb-4 uppercase">Target Account</span>
+<div class="flex items-center gap-3 mt-auto">
+<div class="w-10 h-10 rounded bg-surface-variant border border-border-subtle flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<span class="font-data-display text-data-display text-on-surface text-lg">vanillaa.perfume</span>
+</div>
+</div>
+<!-- Posts Module -->
+<div class="bg-surface-card border border-border-subtle rounded p-6 flex flex-col glow-hover">
+<span class="font-data-label text-data-label text-secondary opacity-50 mb-4 uppercase">Ingested Posts</span>
+<div class="mt-auto flex items-end justify-between">
+<span class="font-data-display text-data-display text-on-surface text-3xl">27</span>
+<span class="font-mono-ui text-mono-ui text-trend-emerald flex items-center"><span class="material-symbols-outlined text-[14px]">arrow_upward</span> Valid</span>
+</div>
+</div>
+<!-- Date Range Module -->
+<div class="bg-surface-card border border-border-subtle rounded p-6 flex flex-col glow-hover">
+<span class="font-data-label text-data-label text-secondary opacity-50 mb-4 uppercase">Temporal Range</span>
+<div class="mt-auto flex flex-col gap-1">
+<span class="font-mono-ui text-mono-ui text-on-surface">Jan 3, 2026</span>
+<div class="flex items-center gap-2 text-secondary opacity-50">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+</div>
+<span class="font-mono-ui text-mono-ui text-on-surface">Apr 2, 2026</span>
+</div>
+</div>
+</div>
+<button class="bg-primary text-on-primary font-mono-ui text-mono-ui px-8 py-4 rounded uppercase font-bold tracking-widest hover:bg-surface-tint transition-all flex items-center gap-2 group">
+                    View Analytics
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="mt-6 text-secondary hover:text-primary font-mono-ui text-mono-ui uppercase tracking-wider text-xs transition-colors underline-offset-4 hover:underline" id="reset-btn">
+                    Upload different file
+                </button>
+</div>
+</div>
+</main>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropzone = document.getElementById('dropzone');
+            const fileInput = document.getElementById('file-input');
+            const triggerBtn = document.getElementById('trigger-upload-btn');
+            
+            const uploadState = document.getElementById('upload-state');
+            const successState = document.getElementById('success-state');
+            const resetBtn = document.getElementById('reset-btn');
+
+            // Trigger file input click
+            triggerBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // Drag and Drop styling
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                dropzone.classList.add('drag-active');
+            }
+
+            function unhighlight(e) {
+                dropzone.classList.remove('drag-active');
+            }
+
+            // Handle Drop
+            dropzone.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                let dt = e.dataTransfer;
+                let files = dt.files;
+                handleFiles(files);
+            }
+
+            // Handle File Input Change
+            fileInput.addEventListener('change', function(e) {
+                handleFiles(this.files);
+            });
+
+            function handleFiles(files) {
+                if(files.length > 0) {
+                    // Simulate processing time
+                    dropzone.classList.add('opacity-50');
+                    triggerBtn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2 text-[16px]">sync</span> Processing...';
+                    
+                    setTimeout(() => {
+                        showSuccessState();
+                    }, 1500);
+                }
+            }
+
+            function showSuccessState() {
+                // Hide Upload
+                uploadState.classList.remove('opacity-100', 'scale-100');
+                uploadState.classList.add('opacity-0', 'scale-95', 'pointer-events-none', 'absolute');
+                
+                // Show Success
+                setTimeout(() => {
+                    successState.classList.remove('opacity-0', 'scale-95', 'pointer-events-none', 'absolute');
+                    successState.classList.add('opacity-100', 'scale-100', 'relative');
+                }, 300);
+            }
+
+            // Reset functionality for demo purposes
+            resetBtn.addEventListener('click', () => {
+                // Hide Success
+                successState.classList.remove('opacity-100', 'scale-100', 'relative');
+                successState.classList.add('opacity-0', 'scale-95', 'pointer-events-none', 'absolute');
+                
+                // Reset Dropzone UI
+                dropzone.classList.remove('opacity-50');
+                triggerBtn.innerHTML = 'Select File';
+                fileInput.value = '';
+
+                // Show Upload
+                setTimeout(() => {
+                    uploadState.classList.remove('opacity-0', 'scale-95', 'pointer-events-none', 'absolute');
+                    uploadState.classList.add('opacity-100', 'scale-100');
+                }, 300);
+            });
+        });
+    </script>
+
+
+
+
+
+
+</body></html>

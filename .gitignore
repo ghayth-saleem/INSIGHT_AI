@@ -1,0 +1,11 @@
+venv/
+env/
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.env
+hf_cache/
+dist/
+build/
+insight_ai_venv/

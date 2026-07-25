@@ -1,0 +1,47 @@
+Loading data...
+Dataset: 29999 posts loaded
+
+==================================================
+MODEL 1: Deep Neural Network (DNN)
+==================================================
+Test set size : 6000 posts
+Test MAE      : 0.002916
+Test RMSE     : 0.008067
+Test R²       : 0.9708
+
+==================================================
+MODEL 2: Isolation Forest (Anomaly Detection)
+==================================================
+Total posts       : 29999
+Anomalies flagged : 1500  (5.0%)
+Normal posts      : 28499  (95.0%)
+
+Performance level distribution:
+  Level 1 (Underperforming) : 6000 posts
+  Level 2 (  Below Average) : 6000 posts
+  Level 3 (        Average) : 5999 posts
+  Level 4 (           High) : 6000 posts
+  Level 5 (          Viral) : 6000 posts
+
+==================================================
+MODEL 3: Prophet (Reach Forecasting) — account_id=1 sample
+==================================================
+Account 1 posts   : 1462
+Test set size     : 293
+MAE  (reach)      : 3666.77
+MAPE (reach)      : 87.43%
+
+==================================================
+MODEL 4: AraBERT Sentiment (CAMeL-Lab)
+==================================================
+Model        : CAMeL-Lab/bert-base-arabic-camelbert-da-sentiment
+Published F1 : 88%  (CAMeL-Lab benchmark on dialectal Arabic)
+Note         : Model is used as-is (no fine-tuning in this project)
+
+==================================================
+SUMMARY
+==================================================
+DNN          — MAE=0.0029  RMSE=0.0081  R²=0.9708
+Iso Forest   — 1500/29999 anomalies (5.0%)
+Prophet      — MAE=3666.77  MAPE=87.43%
+AraBERT      — Published F1: 88% (dialectal Arabic)
