@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { useSession } from '@/context/SessionContext';
 import LockedPage from '@/components/LockedPage';
 
@@ -45,7 +46,7 @@ type SentimentData = {
 };
 
 type PlanAction = { type: string; action: string; priority: string };
-type PlanWeek   = { week: number; actions: PlanAction[] };
+type PlanWeek   = { week: number; focus?: string; actions: PlanAction[] };
 
 type MarketingPlan = {
   plan: PlanWeek[];
@@ -69,9 +70,15 @@ function sentimentColor(s: string) {
 }
 
 function priorityBadge(p: string) {
-  if (p === 'high')   return 'bg-amber-500 text-black font-semibold';
-  if (p === 'medium') return 'bg-sky-500/20 text-sky-400 border border-sky-500/30';
-  return 'bg-bg-hover text-text-muted border border-border-subtle';
+  if (p === 'high')   return 'font-semibold';
+  if (p === 'medium') return '';
+  return '';
+}
+
+function priorityStyle(p: string): CSSProperties {
+  if (p === 'high') return { backgroundColor: 'var(--color-accent-amber)', color: 'var(--color-bg-primary)' };
+  if (p === 'medium') return { backgroundColor: 'var(--color-bg-hover)', color: 'var(--color-text-secondary)', border: '1px solid var(--color-border-active)' };
+  return { backgroundColor: 'var(--color-bg-hover)', color: 'var(--color-text-muted)', border: '1px solid var(--color-border-subtle)' };
 }
 
 // --- Page ---
@@ -118,7 +125,7 @@ export default function InsightsPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        plan_duration_weeks: 3,
+        plan_duration_weeks: 4,
         account_goals: ['increase_reach', 'improve_consistency'],
       }),
     })
@@ -178,7 +185,7 @@ export default function InsightsPage() {
                 </p>
                 <p
                   className="font-syne text-2xl font-bold"
-                  style={{ color: prophet.trend_direction === 'growing' ? '#34d399' : '#fb7185' }}
+                  style={{ color: prophet.trend_direction === 'growing' ? 'var(--color-success)' : 'var(--color-danger)' }}
                 >
                   {prophet.trend_direction === 'growing' ? '↑ Growing' : '↓ Declining'}
                 </p>
@@ -233,12 +240,12 @@ export default function InsightsPage() {
                         className="w-full rounded-t-sm transition-all duration-300"
                         style={{
                           height: `${barH}px`,
-                          backgroundColor: isMax ? '#fb7185' : '#2a2a3e',
+                          backgroundColor: isMax ? 'var(--color-danger)' : 'var(--color-border-active)',
                         }}
                       />
                       <span
                         className="font-mono text-xs leading-none"
-                        style={{ color: isMax ? '#fb7185' : '#52525e' }}
+                        style={{ color: isMax ? 'var(--color-danger)' : 'var(--color-text-muted)' }}
                       >
                         {day.slice(0, 3)}
                       </span>
@@ -423,27 +430,26 @@ export default function InsightsPage() {
         <div className="flex items-center gap-3">
           <span className="w-px h-6 rounded-full bg-amber-500" />
           <h2 className="font-syne text-lg font-bold text-amber-500">Marketing Plan</h2>
-          <span className="font-mono text-xs text-text-muted">Phi-3-mini</span>
         </div>
 
         {/* Pre-generation prompt */}
         {!plan && (
           <div className="bg-bg-card border border-border-subtle rounded-2xl p-8 flex flex-col items-center gap-4 text-center">
             <p className="text-text-secondary text-sm max-w-md">
-              Generate a personalized 3-week marketing plan built from your trend data,
-              sentiment scores, and anomaly analysis.
+              Generate a personalized one-month (4-week) marketing plan built from your trend data,
+              sentiment scores, and anomaly analysis — each week has a clear focus and concrete actions.
             </p>
             <button
               onClick={handleGeneratePlan}
               disabled={generatingPlan}
               className="px-8 py-2.5 rounded-xl font-mono text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ backgroundColor: '#f59e0b', color: '#07070f' }}
+              style={{ backgroundColor: 'var(--color-accent-amber)', color: 'var(--color-bg-primary)' }}
             >
               {generatingPlan ? '▸ Generating...' : '▸ Generate Marketing Plan'}
             </button>
             {generatingPlan && (
               <p className="font-mono text-xs text-text-muted animate-pulse">
-                Phi-3-mini is synthesizing all module outputs. This may take 5–10 seconds...
+                Generating your one-month plan. This may take up to a minute...
               </p>
             )}
           </div>
@@ -465,12 +471,18 @@ export default function InsightsPage() {
             {/* Week blocks */}
             {plan.plan.map(week => (
               <div key={week.week} className="bg-bg-card border border-border-subtle rounded-2xl p-5">
-                <p className="font-syne text-sm font-bold text-amber-500 mb-4">Week {week.week}</p>
+                <div className="flex items-baseline gap-3 mb-4">
+                  <p className="font-syne text-sm font-bold text-amber-500">Week {week.week}</p>
+                  {week.focus && (
+                    <p className="text-text-secondary text-xs">{week.focus}</p>
+                  )}
+                </div>
                 <div className="space-y-2">
                   {week.actions.map((action, i) => (
                     <div key={i} className="flex items-start gap-3 rounded-xl p-3 bg-bg-hover">
                       <span
                         className={`shrink-0 text-xs font-mono px-2 py-0.5 rounded mt-0.5 ${priorityBadge(action.priority)}`}
+                        style={priorityStyle(action.priority)}
                       >
                         {action.priority}
                       </span>

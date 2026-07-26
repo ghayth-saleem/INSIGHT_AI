@@ -52,6 +52,12 @@ def _compute_kpis(df_raw):
     health_score = int(er_score * 0.40 + reach_score * 0.25 + consistency_score * 0.20 + diversity_score * 0.15)
     health_score = min(100, max(0, health_score))
 
+    # dominant content category for this account, used to fetch the right benchmark
+    if 'content_category' in df_raw.columns and not df_raw['content_category'].dropna().empty:
+        dominant_category = str(df_raw['content_category'].mode().iloc[0])
+    else:
+        dominant_category = 'Beauty'
+
     return {
         'engagement_rate': round(avg_er, 4),
         'reach_rate': round(avg_reach_rate, 4),
@@ -65,7 +71,8 @@ def _compute_kpis(df_raw):
             'reach_score': reach_score,
             'consistency_score': consistency_score,
             'diversity_score': diversity_score,
-        }
+        },
+        'dominant_category': dominant_category,
     }
 
 
