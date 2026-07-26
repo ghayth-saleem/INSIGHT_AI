@@ -41,7 +41,7 @@ export default function RootLayout({
         <SessionProvider>
           <div className="flex min-h-screen">
             <Sidebar />
-            <main className="flex-1 min-h-screen overflow-x-hidden" style={{ marginLeft: "64px" }}>
+            <main className="flex-1 min-h-screen overflow-x-hidden" style={{ marginLeft: "80px" }}>
               {children}
             </main>
           </div>

@@ -8,9 +8,8 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const s = { width: size, height: size, minWidth: size, minHeight: size };
   const paths: Record<string, React.ReactNode> = {
     logo: (
-      <svg style={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-        <path d="M12 22.08V12"/><path d="M3.27 6.96L12 12l8.73-5.04"/>
+      <svg style={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M13 2L3 14h7l-1 8 11-14h-7l1-8z" />
       </svg>
     ),
     upload: (
@@ -60,47 +59,34 @@ const NAV_ITEMS = [
   { label: "Chatbot",   path: "/chatbot",   icon: "chatbot",   locked: true  },
 ];
 
+// fixed width, icon-only rail — no hover expand, matches reference design
+export const SIDEBAR_WIDTH = 80;
+
 export default function Sidebar() {
   const pathname = usePathname();
   const { isUnlocked } = useSession();
 
   return (
-    <aside className="
-      fixed left-0 top-0 h-full z-50
-      w-[64px] hover:w-[240px]
-      transition-[width] duration-300 ease-in-out
-      overflow-hidden
-      flex flex-col justify-between py-6
-      group
-    "
-    style={{
-      backgroundColor: "var(--color-bg-sidebar)",
-      borderRight: "1px solid rgba(255,255,255,0.06)",
-    }}>
-
-      {/* Top section */}
-      <div className="flex flex-col gap-6">
-
-        {/* Logo */}
-        <div className="px-4 flex items-center whitespace-nowrap h-8">
-          <div className="shrink-0 w-8 h-8 rounded flex items-center justify-center"
-            style={{ background: "var(--color-surface-container)", border: "1px solid rgba(255,255,255,0.06)", minWidth: "32px", color: "var(--color-accent-amber)" }}>
-            <Icon name="logo" size={16} />
-          </div>
-          <div className="ml-4 flex flex-col overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            <span className="font-heading text-[13px] font-bold uppercase tracking-tighter whitespace-nowrap"
-              style={{ color: "var(--color-text-primary)" }}>
-              INSIGHT AI
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-widest whitespace-nowrap"
-              style={{ color: "var(--color-text-secondary)", opacity: 0.5 }}>
-              Precision Data
-            </span>
-          </div>
+    <aside
+      className="fixed left-0 top-0 h-full z-50 flex flex-col items-center justify-between py-5"
+      style={{
+        width: SIDEBAR_WIDTH,
+        backgroundColor: "var(--color-bg-sidebar)",
+        borderRight: "1px solid var(--color-border-subtle)",
+      }}
+    >
+      {/* Top: logo mark */}
+      <div className="flex flex-col items-center gap-6 w-full">
+        <div
+          className="w-11 h-11 rounded-xl flex items-center justify-center"
+          style={{ background: "var(--color-accent-amber)", color: "var(--color-bg-primary)" }}
+          title="Insight AI"
+        >
+          <Icon name="logo" size={20} />
         </div>
 
         {/* Nav */}
-        <ul className="flex flex-col gap-1 px-2">
+        <ul className="flex flex-col gap-2 w-full items-center">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.path;
             const isLocked = item.locked && !isUnlocked;
@@ -111,21 +97,15 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      {/* Bottom */}
-      <div className="px-2">
-        <Link href="/pipeline"
-          className="flex items-center w-full p-2 rounded whitespace-nowrap transition-colors duration-200 hover:text-amber-500"
-          style={{ color: "var(--color-text-secondary)", opacity: 0.35, textDecoration: "none" }}>
-          <span className="shrink-0 flex items-center justify-center" style={{ minWidth: "20px", marginLeft: "6px", marginRight: "16px" }}>
-            <Icon name="pipeline" size={18} />
-          </span>
-          <span className="font-mono text-[11px] uppercase tracking-widest whitespace-nowrap
-            opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            Pipeline
-          </span>
-        </Link>
-      </div>
-
+      {/* Bottom: pipeline */}
+      <Link
+        href="/pipeline"
+        title="Pipeline"
+        className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors"
+        style={{ color: "var(--color-text-muted)" }}
+      >
+        <Icon name="pipeline" size={18} />
+      </Link>
     </aside>
   );
 }
@@ -139,25 +119,17 @@ function NavItem({
   isActive: boolean;
   isLocked: boolean;
 }) {
-  const iconWrap = (
-    <span className="shrink-0 flex items-center justify-center" style={{ minWidth: "20px", marginLeft: "6px", marginRight: "16px" }}>
-      <Icon name={item.icon} size={18} />
-    </span>
-  );
-
-  const labelEl = (
-    <span className="font-mono text-[11px] uppercase tracking-widest whitespace-nowrap
-      opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-      {item.label}
-    </span>
-  );
+  const icon = <Icon name={item.icon} size={19} />;
 
   if (isLocked) {
     return (
       <li>
-        <div className="flex items-center w-full p-2 rounded whitespace-nowrap"
-          style={{ color: "var(--color-text-secondary)", opacity: 0.25, cursor: "not-allowed" }}>
-          {iconWrap}{labelEl}
+        <div
+          title={`${item.label} — upload data to unlock`}
+          className="w-11 h-11 rounded-xl flex items-center justify-center"
+          style={{ color: "var(--color-text-muted)", opacity: 0.35, cursor: "not-allowed" }}
+        >
+          {icon}
         </div>
       </li>
     );
@@ -166,16 +138,13 @@ function NavItem({
   if (isActive) {
     return (
       <li>
-        <Link href={item.path}
-          className="flex items-center w-full p-2 rounded whitespace-nowrap"
-          style={{
-            color: "var(--color-amber-400)",
-            borderLeft: "2px solid var(--color-amber-400)",
-            background: "rgba(201,155,92,0.10)",
-            textDecoration: "none",
-            paddingLeft: "6px",
-          }}>
-          {iconWrap}{labelEl}
+        <Link
+          href={item.path}
+          title={item.label}
+          className="w-11 h-11 rounded-xl flex items-center justify-center"
+          style={{ background: "var(--color-accent-amber)", color: "var(--color-bg-primary)" }}
+        >
+          {icon}
         </Link>
       </li>
     );
@@ -183,10 +152,13 @@ function NavItem({
 
   return (
     <li>
-      <Link href={item.path}
-        className="flex items-center w-full p-2 rounded whitespace-nowrap transition-colors duration-200 hover:text-amber-500"
-        style={{ color: "var(--color-text-secondary)", opacity: 0.6, textDecoration: "none" }}>
-        {iconWrap}{labelEl}
+      <Link
+        href={item.path}
+        title={item.label}
+        className="w-11 h-11 rounded-xl flex items-center justify-center transition-colors hover:bg-bg-hover"
+        style={{ color: "var(--color-text-secondary)" }}
+      >
+        {icon}
       </Link>
     </li>
   );

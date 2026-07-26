@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useSession } from '@/context/SessionContext';
 import LockedPage from '@/components/LockedPage';
+import PageHeader from '@/components/PageHeader';
 
 // --- Types ---
 
@@ -142,17 +143,10 @@ export default function InsightsPage() {
   const maxSeason  = seasonVals.length ? Math.max(...seasonVals) : 1;
 
   return (
-    <div className="min-h-screen bg-bg-primary p-6 md:p-8 space-y-12">
+    <div>
+      <PageHeader title="Insights" />
 
-      {/* Page header */}
-      <div className="animate-fade-up">
-        <h1 className="font-syne text-2xl font-bold text-text-primary tracking-tight">
-          Insights
-        </h1>
-        <p className="font-mono text-sm text-text-secondary mt-1">
-          Trend forecasting · Caption sentiment · AI marketing plan
-        </p>
-      </div>
+      <div className="p-6 md:p-8 space-y-12">
 
       {/* ═══════════════════════════════════════════
           SECTION 1 — PROPHET
@@ -468,33 +462,53 @@ export default function InsightsPage() {
               </p>
             </div>
 
-            {/* Week blocks */}
-            {plan.plan.map(week => (
-              <div key={week.week} className="bg-bg-card border border-border-subtle rounded-2xl p-5">
-                <div className="flex items-baseline gap-3 mb-4">
-                  <p className="font-syne text-sm font-bold text-amber-500">Week {week.week}</p>
-                  {week.focus && (
-                    <p className="text-text-secondary text-xs">{week.focus}</p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  {week.actions.map((action, i) => (
-                    <div key={i} className="flex items-start gap-3 rounded-xl p-3 bg-bg-hover">
-                      <span
-                        className={`shrink-0 text-xs font-mono px-2 py-0.5 rounded mt-0.5 ${priorityBadge(action.priority)}`}
-                        style={priorityStyle(action.priority)}
-                      >
-                        {action.priority}
-                      </span>
-                      <div>
-                        <p className="font-mono text-xs text-text-muted">{action.type}</p>
-                        <p className="text-text-primary text-sm mt-0.5">{action.action}</p>
+            {/* Week blocks — staggered layout matching reference */}
+            <div className="relative space-y-6 pb-4">
+              {plan.plan.map((week, idx) => {
+                const overallPriority = week.actions.some(a => a.priority === 'high')
+                  ? 'high'
+                  : week.actions.some(a => a.priority === 'medium')
+                  ? 'medium'
+                  : 'low';
+                return (
+                  <div
+                    key={week.week}
+                    className="relative bg-bg-card border border-border-subtle rounded-2xl p-5"
+                    style={{ marginLeft: `${idx * 28}px`, marginRight: `${(plan.plan.length - 1 - idx) * 28}px` }}
+                  >
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div className="flex items-baseline gap-3">
+                        <p className="font-syne text-sm font-bold text-amber-500 uppercase tracking-wide">
+                          Week {week.week}{week.focus ? `: ${week.focus}` : ''}
+                        </p>
                       </div>
+                      <span
+                        className="shrink-0 text-[10px] font-mono px-2.5 py-1 rounded uppercase tracking-wider text-center"
+                        style={priorityStyle(overallPriority)}
+                      >
+                        {overallPriority}<br />prio
+                      </span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+                    <div className="space-y-2">
+                      {week.actions.map((action, i) => (
+                        <div key={i} className="flex items-start gap-3 rounded-xl p-3 bg-bg-hover">
+                          <span
+                            className={`shrink-0 text-xs font-mono px-2 py-0.5 rounded mt-0.5 ${priorityBadge(action.priority)}`}
+                            style={priorityStyle(action.priority)}
+                          >
+                            {action.priority}
+                          </span>
+                          <div>
+                            <p className="font-mono text-xs text-text-muted">{action.type}</p>
+                            <p className="text-text-primary text-sm mt-0.5">{action.action}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
             <button
               onClick={handleGeneratePlan}
@@ -509,6 +523,7 @@ export default function InsightsPage() {
 
       </section>
 
+      </div>
     </div>
   );
 }
