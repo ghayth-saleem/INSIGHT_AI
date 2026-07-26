@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSession } from '@/context/SessionContext';
 import LockedPage from '@/components/LockedPage';
+import PageHeader from '@/components/PageHeader';
 
 // --- Types ---
 
@@ -169,17 +170,10 @@ export default function SimulatePage() {
     : 1;
 
   return (
-    <div className="min-h-screen bg-bg-primary p-6 md:p-8 space-y-8">
+    <div>
+      <PageHeader title="Simulator" />
 
-      {/* Header */}
-      <div className="animate-fade-up">
-        <h1 className="font-syne text-2xl font-bold text-text-primary tracking-tight">
-          What-If Simulator
-        </h1>
-        <p className="font-mono text-sm text-text-secondary mt-1">
-          Configure a hypothetical post and let the DNN predict its engagement rate.
-        </p>
-      </div>
+      <div className="p-6 md:p-8 space-y-8">
 
       {/* Two-column layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-up">
@@ -405,6 +399,8 @@ export default function SimulatePage() {
           )}
 
         </div>
+      </div>
+
       </div>
     </div>
   );
