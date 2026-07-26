@@ -26,10 +26,10 @@ const PRESETS = [
 ];
 
 const MODULE_CHIPS = [
-  { label: 'IF Scores', color: '#22d3ee', captionsOnly: false },
-  { label: 'DNN Predictions', color: '#a78bfa', captionsOnly: false },
-  { label: 'Prophet Forecast', color: '#fb7185', captionsOnly: false },
-  { label: 'AraBERT Sentiment', color: '#34d399', captionsOnly: true },
+  { label: 'IF Scores', color: 'var(--color-module-if)', captionsOnly: false },
+  { label: 'DNN Predictions', color: 'var(--color-module-dnn)', captionsOnly: false },
+  { label: 'Prophet Forecast', color: 'var(--color-module-prophet)', captionsOnly: false },
+  { label: 'AraBERT Sentiment', color: 'var(--color-module-arabert)', captionsOnly: true },
 ];
 
 // --- Page ---
@@ -234,7 +234,7 @@ export default function ChatbotPage() {
             onClick={() => sendMessage(input)}
             disabled={loading || !input.trim()}
             className="px-5 py-3 rounded-xl font-mono text-sm font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-            style={{ backgroundColor: '#f59e0b', color: '#07070f' }}
+            style={{ backgroundColor: 'var(--color-accent-amber)', color: 'var(--color-bg-primary)' }}
           >
             Send
           </button>

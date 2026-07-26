@@ -74,7 +74,7 @@ export default function Sidebar() {
       group
     "
     style={{
-      backgroundColor: "#09090f",
+      backgroundColor: "var(--color-bg-sidebar)",
       borderRight: "1px solid rgba(255,255,255,0.06)",
     }}>
 
@@ -84,16 +84,16 @@ export default function Sidebar() {
         {/* Logo */}
         <div className="px-4 flex items-center whitespace-nowrap h-8">
           <div className="shrink-0 w-8 h-8 rounded flex items-center justify-center"
-            style={{ background: "#1f1f28", border: "1px solid rgba(255,255,255,0.06)", minWidth: "32px", color: "#ffb95f" }}>
+            style={{ background: "var(--color-surface-container)", border: "1px solid rgba(255,255,255,0.06)", minWidth: "32px", color: "var(--color-accent-amber)" }}>
             <Icon name="logo" size={16} />
           </div>
           <div className="ml-4 flex flex-col overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             <span className="font-heading text-[13px] font-bold uppercase tracking-tighter whitespace-nowrap"
-              style={{ color: "#e4e1ee" }}>
+              style={{ color: "var(--color-text-primary)" }}>
               INSIGHT AI
             </span>
             <span className="font-mono text-[10px] uppercase tracking-widest whitespace-nowrap"
-              style={{ color: "#c8c5cf", opacity: 0.5 }}>
+              style={{ color: "var(--color-text-secondary)", opacity: 0.5 }}>
               Precision Data
             </span>
           </div>
@@ -115,7 +115,7 @@ export default function Sidebar() {
       <div className="px-2">
         <Link href="/pipeline"
           className="flex items-center w-full p-2 rounded whitespace-nowrap transition-colors duration-200 hover:text-amber-500"
-          style={{ color: "#c8c5cf", opacity: 0.35, textDecoration: "none" }}>
+          style={{ color: "var(--color-text-secondary)", opacity: 0.35, textDecoration: "none" }}>
           <span className="shrink-0 flex items-center justify-center" style={{ minWidth: "20px", marginLeft: "6px", marginRight: "16px" }}>
             <Icon name="pipeline" size={18} />
           </span>
@@ -156,7 +156,7 @@ function NavItem({
     return (
       <li>
         <div className="flex items-center w-full p-2 rounded whitespace-nowrap"
-          style={{ color: "#c8c5cf", opacity: 0.25, cursor: "not-allowed" }}>
+          style={{ color: "var(--color-text-secondary)", opacity: 0.25, cursor: "not-allowed" }}>
           {iconWrap}{labelEl}
         </div>
       </li>
@@ -169,9 +169,9 @@ function NavItem({
         <Link href={item.path}
           className="flex items-center w-full p-2 rounded whitespace-nowrap"
           style={{
-            color: "#ffc174",
-            borderLeft: "2px solid #ffc174",
-            background: "rgba(245,158,11,0.07)",
+            color: "var(--color-amber-400)",
+            borderLeft: "2px solid var(--color-amber-400)",
+            background: "rgba(201,155,92,0.10)",
             textDecoration: "none",
             paddingLeft: "6px",
           }}>
@@ -185,7 +185,7 @@ function NavItem({
     <li>
       <Link href={item.path}
         className="flex items-center w-full p-2 rounded whitespace-nowrap transition-colors duration-200 hover:text-amber-500"
-        style={{ color: "#c8c5cf", opacity: 0.6, textDecoration: "none" }}>
+        style={{ color: "var(--color-text-secondary)", opacity: 0.6, textDecoration: "none" }}>
         {iconWrap}{labelEl}
       </Link>
     </li>

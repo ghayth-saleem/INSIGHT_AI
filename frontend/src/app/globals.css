@@ -1,49 +1,65 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #07070f;
-  --color-bg-sidebar: #09090f;
-  --color-bg-card: #0f0f1a;
-  --color-bg-hover: #14142a;
-  --color-text-primary: #e2e2e6;
-  --color-text-secondary: #8a8a9a;
-  --color-text-muted: #52525e;
-  --color-border-subtle: #1a1a2e;
-  --color-border-active: #2a2a3e;
-  --color-accent-amber: #f59e0b;
-  --color-amber-400: #fbbf24;
-  --color-amber-500: #f59e0b;
-  --color-amber-600: #d97706;
-  --color-module-if: #22d3ee;
-  --color-module-dnn: #a78bfa;
-  --color-module-prophet: #fb7185;
-  --color-module-arabert: #34d399;
+  /* Backgrounds — moderate dark, not pitch black */
+  --color-bg-primary: #15151c;
+  --color-bg-sidebar: #121218;
+  --color-bg-card: #1c1c25;
+  --color-bg-hover: #24242f;
 
-  --color-surface: #13131b;
-  --color-surface-dim: #13131b;
-  --color-surface-card: #0d0d14;
-  --color-surface-container: #1f1f28;
-  --color-surface-container-low: #1b1b24;
-  --color-surface-container-high: #292932;
-  --color-surface-container-highest: #34343e;
-  --color-surface-variant: #34343e;
-  --color-surface-bright: #393842;
-  --color-sidebar-bg: #09090f;
-  --color-on-surface: #e4e1ee;
-  --color-on-surface-variant: #d8c3ad;
-  --color-secondary: #c8c5cf;
-  --color-outline: #a08e7a;
-  --color-outline-variant: #534434;
-  --color-primary: #ffc174;
-  --color-primary-container: #f59e0b;
-  --color-primary-fixed-dim: #ffb95f;
-  --color-on-primary: #472a00;
-  --color-tertiary: #8fd5ff;
-  --color-anomaly-cyan: #06b6d4;
-  --color-engagement-violet: #8b5cf6;
-  --color-trend-emerald: #10b981;
-  --color-sentiment-rose: #f43f5e;
-  --color-error: #ffb4ab;
+  /* Text — warm, readable grays */
+  --color-text-primary: #e9e7ee;
+  --color-text-secondary: #a3a1ae;
+  --color-text-muted: #6d6b7a;
+
+  /* Borders */
+  --color-border-subtle: #2a2a36;
+  --color-border-active: #3a3a49;
+
+  /* Accent — muted, calm gold (single brand color) */
+  --color-accent-amber: #c99b5c;
+  --color-amber-400: #d4ac77;
+  --color-amber-500: #c99b5c;
+  --color-amber-600: #ac7f44;
+
+  /* Module tags — desaturated, low-contrast variants used only as small identifiers,
+     never as loud primary UI color */
+  --color-module-if: #7fadb8;
+  --color-module-dnn: #9d93bd;
+  --color-module-prophet: #c3908f;
+  --color-module-arabert: #82ab8d;
+
+  --color-surface: #1c1c25;
+  --color-surface-dim: #1c1c25;
+  --color-surface-card: #1c1c25;
+  --color-surface-container: #24242f;
+  --color-surface-container-low: #1f1f28;
+  --color-surface-container-high: #2c2c38;
+  --color-surface-container-highest: #34343f;
+  --color-surface-variant: #34343f;
+  --color-surface-bright: #3c3c47;
+  --color-sidebar-bg: #121218;
+  --color-on-surface: #e9e7ee;
+  --color-on-surface-variant: #c7bba8;
+  --color-secondary: #a3a1ae;
+  --color-outline: #8f8474;
+  --color-outline-variant: #4a4238;
+  --color-primary: #d4ac77;
+  --color-primary-container: #c99b5c;
+  --color-primary-fixed-dim: #c99b5c;
+  --color-on-primary: #2b1d0c;
+  --color-tertiary: #8fadc2;
+
+  /* Semantic feedback colors — used ONLY to mean something (positive/negative/warning),
+     kept muted so they read as information, not decoration */
+  --color-success: #82ab8d;
+  --color-danger: #c3908f;
+  --color-warning: #c99b5c;
+  --color-anomaly-cyan: #7fadb8;
+  --color-engagement-violet: #9d93bd;
+  --color-trend-emerald: #82ab8d;
+  --color-sentiment-rose: #c3908f;
+  --color-error: #c3908f;
 
   --font-heading: "Syne", sans-serif;
   --font-mono: "Space Mono", monospace;
@@ -70,20 +86,37 @@ html {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
   min-height: 100%;
   background-color: var(--color-bg-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* Readable defaults for real body copy (paragraphs, chat messages, explanations).
+   Small mono/uppercase labels stay opt-in via utility classes on specific elements,
+   not the default for every piece of text. */
+p, li {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #09090f; }
-::-webkit-scrollbar-thumb { background: #34343e; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #494851; }
+::-webkit-scrollbar-track { background: var(--color-bg-sidebar); }
+::-webkit-scrollbar-thumb { background: var(--color-border-active); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
 
 ::selection {
-  background-color: rgba(245, 158, 11, 0.3);
+  background-color: rgba(201, 155, 92, 0.25);
   color: var(--color-text-primary);
 }
 
@@ -93,11 +126,11 @@ body {
 }
 
 .drag-active {
-  border-color: #ffc174 !important;
-  background-color: rgba(245, 158, 11, 0.05);
-  box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.1);
+  border-color: var(--color-accent-amber) !important;
+  background-color: rgba(201, 155, 92, 0.05);
+  box-shadow: inset 0 0 12px rgba(201, 155, 92, 0.08);
 }
 
 .glow-hover:hover {
-  box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.08);
+  box-shadow: inset 0 0 10px rgba(201, 155, 92, 0.06);
 }
