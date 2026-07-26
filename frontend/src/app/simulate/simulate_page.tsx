@@ -67,16 +67,16 @@ function GaugeChart({ value, max = 0.15 }: { value: number; max?: number }) {
   const ey = cy - r * Math.sin(angleRad);
 
   // Color thresholds
-  let gaugeColor = '#ef4444';
-  if (value >= 0.06) gaugeColor = '#34d399';
-  else if (value >= 0.03) gaugeColor = '#f59e0b';
+  let gaugeColor = 'var(--color-danger)';
+  if (value >= 0.06) gaugeColor = 'var(--color-success)';
+  else if (value >= 0.03) gaugeColor = 'var(--color-accent-amber)';
 
   return (
     <svg viewBox="0 0 200 130" className="w-60 h-40">
       {/* Background track */}
       <path
         d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-        fill="none" stroke="#2a2a3e" strokeWidth="14" strokeLinecap="round"
+        fill="none" stroke="var(--color-border-active)" strokeWidth="14" strokeLinecap="round"
       />
       {/* Filled arc — skip for near-zero values to avoid degenerate path */}
       {fraction >= 0.01 && (
@@ -99,15 +99,15 @@ function GaugeChart({ value, max = 0.15 }: { value: number; max?: number }) {
       <text
         x={cx} y={cy + 5}
         textAnchor="middle"
-        fill="#52525e"
+        fill="var(--color-text-muted)"
         fontSize="7.5"
         fontFamily="'Space Mono', monospace"
       >
         ENGAGEMENT RATE
       </text>
       {/* Scale labels */}
-      <text x={cx - r} y={cy + 20} textAnchor="middle" fill="#52525e" fontSize="7" fontFamily="'Space Mono', monospace">0%</text>
-      <text x={cx + r} y={cy + 20} textAnchor="middle" fill="#52525e" fontSize="7" fontFamily="'Space Mono', monospace">{(max * 100).toFixed(0)}%</text>
+      <text x={cx - r} y={cy + 20} textAnchor="middle" fill="var(--color-text-muted)" fontSize="7" fontFamily="'Space Mono', monospace">0%</text>
+      <text x={cx + r} y={cy + 20} textAnchor="middle" fill="var(--color-text-muted)" fontSize="7" fontFamily="'Space Mono', monospace">{(max * 100).toFixed(0)}%</text>
     </svg>
   );
 }
@@ -115,9 +115,9 @@ function GaugeChart({ value, max = 0.15 }: { value: number; max?: number }) {
 // --- Helpers ---
 
 function bucketColor(bucket: string) {
-  if (bucket === 'Viral' || bucket === 'High') return '#34d399';
-  if (bucket === 'Average') return '#f59e0b';
-  return '#ef4444';
+  if (bucket === 'Viral' || bucket === 'High') return 'var(--color-success)';
+  if (bucket === 'Average') return 'var(--color-accent-amber)';
+  return 'var(--color-danger)';
 }
 
 // --- Page ---
@@ -235,7 +235,7 @@ export default function SimulatePage() {
                 type="range" min={0} max={23} step={1}
                 value={form.post_hour}
                 onChange={e => setField('post_hour', parseInt(e.target.value))}
-                style={{ accentColor: '#a78bfa' }}
+                style={{ accentColor: 'var(--color-accent-amber)' }}
                 className="w-full"
               />
             </div>
@@ -252,7 +252,7 @@ export default function SimulatePage() {
                 type="range" min={1000} max={100000} step={500}
                 value={form.follower_count}
                 onChange={e => setField('follower_count', parseInt(e.target.value))}
-                style={{ accentColor: '#a78bfa' }}
+                style={{ accentColor: 'var(--color-accent-amber)' }}
                 className="w-full"
               />
             </div>
@@ -267,7 +267,7 @@ export default function SimulatePage() {
                 type="range" min={0} max={300} step={10}
                 value={form.caption_length}
                 onChange={e => setField('caption_length', parseInt(e.target.value))}
-                style={{ accentColor: '#a78bfa' }}
+                style={{ accentColor: 'var(--color-accent-amber)' }}
                 className="w-full"
               />
             </div>
@@ -282,7 +282,7 @@ export default function SimulatePage() {
                 type="range" min={0} max={30} step={1}
                 value={form.hashtags_count}
                 onChange={e => setField('hashtags_count', parseInt(e.target.value))}
-                style={{ accentColor: '#a78bfa' }}
+                style={{ accentColor: 'var(--color-accent-amber)' }}
                 className="w-full"
               />
             </div>
@@ -297,7 +297,7 @@ export default function SimulatePage() {
                 <span
                   className="w-10 h-5 rounded-full flex items-center transition-all duration-200"
                   style={{
-                    backgroundColor: form.has_call_to_action === 1 ? '#a78bfa' : '#2a2a3e',
+                    backgroundColor: form.has_call_to_action === 1 ? 'var(--color-accent-amber)' : 'var(--color-border-active)',
                     padding: '2px',
                     justifyContent: form.has_call_to_action === 1 ? 'flex-end' : 'flex-start',
                   }}
@@ -306,7 +306,7 @@ export default function SimulatePage() {
                 </span>
                 <span
                   className="font-mono text-xs"
-                  style={{ color: form.has_call_to_action === 1 ? '#a78bfa' : '#52525e' }}
+                  style={{ color: form.has_call_to_action === 1 ? 'var(--color-accent-amber)' : 'var(--color-text-muted)' }}
                 >
                   {form.has_call_to_action === 1 ? 'Yes' : 'No'}
                 </span>
@@ -320,7 +320,7 @@ export default function SimulatePage() {
             onClick={handlePredict}
             disabled={predicting}
             className="w-full py-3 rounded-xl font-mono text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ backgroundColor: '#a78bfa', color: '#07070f' }}
+            style={{ backgroundColor: 'var(--color-accent-amber)', color: 'var(--color-bg-primary)' }}
           >
             {predicting ? '▸ Running inference...' : '▸ Predict Engagement Rate'}
           </button>
@@ -379,7 +379,7 @@ export default function SimulatePage() {
                   {result.top_contributing_features.map((f, i) => {
                     const barWidth = Math.round((Math.abs(f.contribution) / maxContrib) * 100);
                     const isPos    = f.direction === 'positive';
-                    const barColor = isPos ? '#34d399' : '#fb7185';
+                    const barColor = isPos ? 'var(--color-success)' : 'var(--color-danger)';
                     return (
                       <div key={i} className="space-y-1">
                         <div className="flex justify-between items-center">

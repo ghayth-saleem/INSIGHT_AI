@@ -12,7 +12,7 @@ OLLAMA_MODEL = "qwen2.5:7b-instruct-q4_K_M"
 
 
 class MarketingPlanRequest(BaseModel):
-    plan_duration_weeks: int = 3
+    plan_duration_weeks: int = 4
     account_goals: List[str] = []
 
 
@@ -54,13 +54,20 @@ def _fallback_plan(prophet_results, level_counts, plan_weeks):
             {"type": "Schedule", "action": f"Post 3 reels on {best_day} at {best_hour:02d}:00", "priority": "high"},
             {"type": "Content", "action": "Use positive-tone Arabic captions with a clear call-to-action", "priority": "high"},
         ]
+        focus = "Consistency and steady posting"
         if w == 1 and underperforming > 3:
+            focus = "Diagnose what's underperforming"
             actions.append({"type": "Review", "action": "Audit your 5 lowest-performing posts and identify common caption and timing patterns", "priority": "medium"})
         if w == 2 and viral > 0:
+            focus = "Double down on what's working"
             actions.append({"type": "Content", "action": f"Recreate the format and caption style of your {viral} viral post(s)", "priority": "high"})
         if trend == 'declining':
+            focus = "Recover engagement momentum"
             actions.append({"type": "Engagement", "action": "Reply to all comments within 2 hours of posting to boost early engagement signals", "priority": "medium"})
-        plan.append({"week": w, "actions": actions})
+        if w == plan_weeks:
+            focus = "Review results and plan next month"
+            actions.append({"type": "Review", "action": "Compare this month's engagement rate against the start of the month and note what changed", "priority": "medium"})
+        plan.append({"week": w, "focus": focus, "actions": actions})
 
     summary = f"Your account has {underperforming} underperforming posts out of {sum(level_counts.values())} total. Prioritize posting consistently on {best_day}s at {best_hour:02d}:00."
     if trend == 'declining':
@@ -119,6 +126,16 @@ def get_marketing_plan(session_id: str, body: MarketingPlanRequest, request: Req
 
     prompt = f"""You are InsightAI, a marketing advisor for small Jordanian businesses on Instagram.
 
+Follow these rules exactly, with no exceptions:
+
+1. LANGUAGE: Write the entire plan (summary, action types, and every action) in the SAME language as the account's goals text below. If the goals are in Arabic, write the whole plan in Arabic. If they're in English, write it in English. If goals are empty or mixed, default to English. Never mix languages within the plan.
+2. GROUNDING: Base every recommendation strictly on the ACCOUNT DATA below. Never invent metrics, dates, or facts not given here.
+3. LOGICAL CONSISTENCY: Do not contradict yourself between weeks (e.g. don't recommend "reduce posting frequency" in Week 1 and "post more often" in Week 2 without an explicit, stated reason tied to the data). Each week should build logically on the previous one.
+4. ONE-MONTH STRUCTURE: This is a {plan_weeks}-week plan meant to cover one full month. Each week must have a clear, distinct focus (e.g. Week 1: fix what's underperforming, Week 2: double down on what's working, Week 3: consistency and engagement speed, Week 4: review and plan next month) — adapt the focus to what the actual data shows, don't just reuse this example structure verbatim.
+5. SPECIFICITY: Every action must be concrete and immediately doable (a specific day/time, a specific content type, a specific number) — never vague advice like "post more" or "engage with your audience" on its own.
+6. PRIORITY: Mark each action "high", "medium", or "low" based on expected impact given the data, not arbitrarily.
+7. OUTPUT FORMAT: Respond with ONLY valid JSON, no markdown fences, no commentary before or after it.
+
 ACCOUNT DATA:
 - Account: {meta.get('account_name', 'unknown')}
 - Engagement Rate: {avg_er}%
@@ -127,17 +144,18 @@ ACCOUNT DATA:
 - Viral posts: {level_counts.get(5, 0)}, Underperforming posts: {level_counts.get(1, 0) + level_counts.get(2, 0)}
 - Goals: {goals_str}
 
-Generate a {plan_weeks}-week marketing plan. Respond ONLY with valid JSON and nothing else:
+Generate the {plan_weeks}-week (one month) plan as this exact JSON shape:
 {{
   "plan": [
     {{
       "week": 1,
+      "focus": "short phrase naming this week's theme",
       "actions": [
         {{"type": "Schedule", "action": "specific actionable step", "priority": "high"}}
       ]
     }}
   ],
-  "summary": "one paragraph explaining the overall strategy"
+  "summary": "one paragraph explaining the overall month-long strategy and how the weeks connect"
 }}"""
 
     start = time.time()

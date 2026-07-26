@@ -18,6 +18,7 @@ interface KpiData {
     consistency_score: number;
     diversity_score: number;
   };
+  dominant_category: string;
 }
 
 interface BenchmarkData {
@@ -88,10 +89,9 @@ export default function AnalyticsPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const [kpiRes, anomalyRes, benchRes] = await Promise.all([
+      const [kpiRes, anomalyRes] = await Promise.all([
         fetch(`http://localhost:8000/api/v1/kpis/${sid}`),
         fetch(`http://localhost:8000/api/v1/anomalies/${sid}`),
-        fetch(`http://localhost:8000/api/v1/benchmarks/Beauty`),
       ]);
 
       if (!kpiRes.ok) throw new Error(`KPIs failed: ${kpiRes.status}`);
@@ -99,6 +99,10 @@ export default function AnalyticsPage() {
 
       const kpiData = await kpiRes.json();
       const anomalyData = await anomalyRes.json();
+
+      // fetch benchmarks for this account's actual dominant content category
+      const category = kpiData.dominant_category || "Beauty";
+      const benchRes = await fetch(`http://localhost:8000/api/v1/benchmarks/${encodeURIComponent(category)}`);
       const benchData = benchRes.ok ? await benchRes.json() : null;
 
       setKpis(kpiData);
