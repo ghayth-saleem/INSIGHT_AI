@@ -7,7 +7,7 @@ from fastapi import APIRouter, Request, HTTPException
 router = APIRouter()
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "phi3:mini"
+OLLAMA_MODEL = "qwen2.5:7b-instruct-q4_K_M"
 
 
 class ChatRequest(BaseModel):
@@ -139,7 +139,7 @@ def _format_history(history):
     return '\n'.join(lines)
 
 
-def _call_ollama(prompt, timeout=60):
+def _call_ollama(prompt, timeout=120):
     """Send prompt to Ollama and return response text. Returns None on failure."""
     try:
         resp = requests.post(
@@ -221,10 +221,18 @@ def chat(session_id: str, body: ChatRequest, request: Request):
     history_str = _format_history(body.conversation_history)
     sources = _build_sources(session)
 
-    prompt = f"""You are InsightAI, a friendly marketing advisor for small Jordanian businesses on Instagram.
-You have access to pre-analyzed data below. Use ONLY this data to answer the user's question.
-Do NOT invent numbers or make up data that is not provided below.
-Keep your answer concise (3-5 sentences), practical, and easy for a non-technical store owner to understand.
+    prompt = f"""You are InsightAI, a marketing advisor for small Jordanian businesses on Instagram.
+
+Follow these rules exactly, with no exceptions:
+
+1. LANGUAGE: Reply in the SAME language the user's question is written in. If the question is in Arabic (including Jordanian dialect / "Arabizi" written in Latin letters), reply fully in Arabic. If it's in English, reply fully in English. Never mix languages within one answer unless the user themselves mixed languages, and never switch language mid-answer.
+2. GROUNDING: Use ONLY the numbers and facts given below in ANALYZED DATA. Never invent, estimate, or guess a number that is not explicitly present there. If the data needed to answer isn't available, say so plainly instead of making something up.
+3. LOGICAL CONSISTENCY: Every claim in your answer must follow directly from the data. Do not contradict yourself within the same answer (e.g. don't call the trend "growing" in one sentence and "declining" in the next). Before answering, check that your conclusion actually matches the numbers you're citing.
+4. NO FABRICATED CAUSALITY: Only state a cause-and-effect relationship if the data actually supports it (e.g. a feature contribution score, a stated correlation). Don't invent reasons for why something happened if the data doesn't say why.
+5. TONE: Practical, direct, and easy for a non-technical store owner to understand. No marketing jargon, no filler phrases like "great question!" or "I'd be happy to help!" — just answer.
+6. LENGTH: 3-5 sentences, unless the question explicitly asks for a list or a longer breakdown.
+7. HONESTY OVER COMPLETENESS: If the user asks something the data cannot answer, say clearly that the data doesn't cover that, rather than answering a nearby but different question as if it were the one asked.
+8. NUMBERS: When citing a number from ANALYZED DATA, use it exactly as given (don't round differently or recompute it).
 
 ANALYZED DATA:
 {context}
@@ -232,7 +240,7 @@ ANALYZED DATA:
 
 USER QUESTION: {body.question}
 
-Answer in a helpful, direct tone:"""
+Answer now, following all the rules above:"""
 
     start = time.time()
     llm_response = _call_ollama(prompt)
